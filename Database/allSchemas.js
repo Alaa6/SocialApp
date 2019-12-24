@@ -1,7 +1,6 @@
 1
 import { Realm } from 'realm';
 
-
 export const ITEM_SCHEMA = 'Item';
 
 export const MenuItemSchema={
@@ -9,7 +8,7 @@ export const MenuItemSchema={
     primaryKey: 'id' ,
     properties:{
         id :'int',
-        name :{type : 'string' ,indexed:true ,default :false},
+        name :{type : 'string' , indexed:true , default :false},
         image:'string'
     }
     
@@ -20,6 +19,8 @@ const databaseObtions ={
     schema :[MenuItemSchema],
     schemaVersion :0 //optional
 };
+
+
 
 export const InsertNewItemIntoMenu= newItem => new Promise((resolve , reject)=> {
     Realm.open({schema :[MenuItemSchema]})

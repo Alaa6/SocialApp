@@ -8,13 +8,18 @@ import {
   Text,
   FlatList
 } from 'react-native';
+import AllMenuItems from '../AllMenuItems/AllMenuItems' ;
 
 //import HomeSideMenu from '../menu/HomeSideMenu'
 import {Navigation} from 'react-native-navigation' ;
 import Header from '../../Components/header/header';
 //import { FlatList } from 'react-native-gesture-handler';
-import realm from '../../../Database/allSchemas';
+//import realm from '../../../Database/allSchemas';
 import Swipeout from 'react-native-swipeout';
+import Realm from 'realm';
+
+
+
 
 
 // let FlatListItem = props => {
@@ -64,14 +69,29 @@ import Swipeout from 'react-native-swipeout';
 //   );
 //     }
 
+
+let realm;
+
 class Home  extends Component{
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      itemList:[] ,
-    }
+    realm = new Realm({
+      path: 'MenuDB2.realm',
+      schema: [
+        {
+          name: 'Item_Details',
+          properties: {
+            item_id: { type: 'int', default: 0 },
+            item_Name :{type : 'string' ,indexed:true ,default :false},
+            item_Price :{type : 'string' ,indexed:true ,default :false},
+            item_Image:'string'
+          },
+        },
+      ],
+     
+    });
     //this.reloadData();
     // realm.addListener('change', () => {
     //     this.reloadData();
@@ -94,6 +114,8 @@ class Home  extends Component{
      return (
         <View style ={styles.container}>
           <Header title='Home'/>
+
+          <AllMenuItems/>
      
           {/* <FlatList
        
