@@ -23,6 +23,7 @@
     "react-native-maps": "^0.26.1",
     "react-native-navigation": "^4.0.6",
     "react-native-offline": "^5.2.0",
+    "react-native-popup-dialog": "^0.18.3",
     "react-native-popup-menu": "^0.15.6",
     "react-native-progress-steps": "^1.2.8",
     "react-native-splash-screen": "^3.2.0",

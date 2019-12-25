@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 
 import Home from '../Screens/Home/Home'
-import AddItem from '../Screens/AddItem/AddItem'
+import AddItem from '../Screens/Item/AddItem'
 import { ReduxNetworkProvider } from 'react-native-offline';
 
 

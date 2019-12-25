@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   titlePageStyle: {
     paddingLeft: 40,
     paddingRight: 40,
-    fontSize: 30,
+    fontSize: 23,
     color: 'rgba(0,128,0 ,0.7)',
 
   },
