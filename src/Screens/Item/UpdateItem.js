@@ -183,9 +183,9 @@ class UpdateItem extends Component {
 
                 <ScrollView style={{ flex: 1 }} contentContainerStyle={{ justifyContent: 'center' }}>
                     {new_photo ?
-                      <Image source={{ uri: new_photo }} style={{ width: 300, height: 300, alignSelf: 'center', marginTop: 20 }} />
+                      <Image source={{ uri: new_photo }} style={{ width: 300, height: 300, alignSelf: 'center', marginTop: 20 ,resizeMode:'stretch'}} />
                       :
-                     <Image source={{ uri: photo }} style={{ width: 300, height: 300, alignSelf: 'center', marginTop: 20 }} />
+                     <Image source={{ uri: photo }} style={{ width: 300, height: 300, alignSelf: 'center', marginTop: 20,resizeMode:'stretch' }} />
 
 
 
@@ -256,7 +256,7 @@ s
                          />
 
 
-                    <MyButton title='Save' customClick={this.UbdateData} />
+                    <MyButton title='Update' customClick={this.UbdateData} />
 
                 </ScrollView>
 

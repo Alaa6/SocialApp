@@ -2,20 +2,21 @@
 import React, { Component } from 'react';
 import Icon3 from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
+import Ant from 'react-native-vector-icons/AntDesign';
 import {
   StyleSheet,
   View,
   Text,
+  Dimensions
 } from 'react-native';
-
 import { Navigation } from 'react-native-navigation';
 Navigation.registerComponent('Guide.menu', () => RestaurantScreen);
 Navigation.registerComponent('Guide.header', () => Header);
-
 Navigation.registerComponent('Guide.sidemenu', () => HomeSideMenu);
 
 
 
+const {width} = Dimensions.get('window');
 class Header extends Component {
 
 
@@ -33,6 +34,11 @@ class Header extends Component {
     });
   }
 
+  back() {
+    Navigation.dismissAllModals();
+   
+  }
+
 
 
   render() {
@@ -41,10 +47,11 @@ class Header extends Component {
 
 
 
-        <Icon2
+        <Ant
           style={styles.bellIconStyle}
-          name='bell'
-          size={30} />
+          name='arrowright'
+          size={25} 
+          onPress={this.back}/>
         <Text style={styles.titlePageStyle}> {this.props.title}</Text>
         <Icon3
           style={styles.menuIconStyle}
@@ -69,15 +76,17 @@ const styles = StyleSheet.create({
     // flex :1 ,
     flexDirection: 'row-reverse',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     marginTop: 10,
+    height :width/4.5
+
 
 
   },
 
   titlePageStyle: {
-    paddingLeft: 40,
-    paddingRight: 40,
+   
+    
     fontSize: 23,
     color: 'rgba(0,128,0 ,0.7)',
 

@@ -8,6 +8,7 @@ import { ReduxNetworkProvider } from 'react-native-offline';
 import store from '../../Store';
 import { Provider } from 'react-redux';
 import Home from '../Home/Home'
+import ItemDetails from '../Item/ItemDetails'
 
 let realm;
 
@@ -27,6 +28,15 @@ Navigation.registerComponent('Home', () => (props) => (
     </Provider>
 ), () => Home);
 
+Navigation.registerComponent('ItemDetails', () => (props) => (
+    <Provider store={store}>
+        <ReduxNetworkProvider>
+            <ItemDetails {...props} />
+        </ReduxNetworkProvider>
+    </Provider>
+), () => ItemDetails);
+
+
 export default class ViewAllMenuItem extends React.Component {
     constructor(props) {
         super(props);
@@ -40,18 +50,21 @@ export default class ViewAllMenuItem extends React.Component {
 
         this.state = {
             FlatListItems: Item_details,
-            id: Item_details.item_id
+            id: Item_details.item_id ,
+            name : Item_details.item_Name,
+            Image : Item_details.item_Image,
+            Price : Item_details.item_Price,
+
+
         };
     }
     ListViewItemSeparator = () => {
         return (
-            <View style={{ height: 0.5, width: '100%', backgroundColor: '#000' }} />
+            <View style={{ height: 0.5, width: '100%', backgroundColor: '#eeeeee' }} />
         );
     };
 
     pushHomeScreen = () => {
-
-
         Navigation.showModal({
             component: {
                 id: 'homeId',
@@ -62,6 +75,24 @@ export default class ViewAllMenuItem extends React.Component {
             }
 
         })
+    }
+
+    goToItemDetails =()=>{
+        Navigation.showModal({
+            component: {
+                id: 'ItemDetailsId',
+                name: 'ItemDetails',
+                passProps: {
+                    photo: item.item_Image,
+                    item_name: item.item_Name,
+                    item_price: item.item_Price,
+                    item_id: item.item_id
+                }
+            }
+
+        })
+   
+
     }
 
 
@@ -103,36 +134,73 @@ export default class ViewAllMenuItem extends React.Component {
                                     backgroundColor: 'rgb(217, 80, 64)',
                                     onPress: () => {
 
-                                        realm.write(() => {
-                                            
-                                            console.log(item.item_id);
-                                            var Item_Details = realm.objects('Item_Details');
-                                            console.log(Item_Details);
-                                            realm.delete(
-                                                realm.objects('Item_Details').filtered('item_id =' + item.item_id)
-                                            );
-                                            var Item_Details = realm.objects('Item_Details');
-                                            console.log(Item_Details);
+                                        
                                             Alert.alert(
-                                                'Success',
-                                                'User deleted successfully',
-                                                [
-                                                    {
-                                                        text: 'Ok',
-                                                        onPress: this.pushHomeScreen,
-                                                    },
-                                                ],
-                                                { cancelable: false }
-                                            );
+                                                          'Delete',
+                                                          'Do you sure to delete this item ?',
+                                                          [
+                                                              {
+                                                                  text: 'No', onPress: () => { },//Do nothing
+                                                                  style: 'cancel'
+                                                              },
+                                                              {
+                                                                  text: 'Yes', onPress: () => {
+                                                                    realm.write(() => {
+                                            
+                                                                        console.log(item.item_id);
+                                                                        var Item_Details = realm.objects('Item_Details');
+                                                                        console.log(Item_Details);
+                                                                        realm.delete(
+                                                                            realm.objects('Item_Details').filtered('item_id =' + item.item_id)
+                                                                        );
+                                                                        var Item_Details = realm.objects('Item_Details');
+                                                                        console.log(Item_Details); 
+                                                                       
+                                                                    });
+                                                                    Alert.alert(
+                                                                                  'Delete',
+                                                                                  'this Item is deleted successfully !',
+                                                                                  [
+                                                                                      
+                                                                                      {
+                                                                                          text: 'Ok', onPress: this.pushHomeScreen
+                                                                        
+                                                                        
+                                                                                      },
+                                                                                  ],
+                                                                                  { cancelable: true }
+                                                                              );
+                                                                    
+                                                
+                                                                  }
+                                                              },
+                                                          ],
+                                                          { cancelable: true }
+                                                      );
 
-                                        });
+                                                     
+                                        
                                     }
                                 }
                             ]} autoClose={true}>
 
-                                <TouchableOpacity >
+                                <TouchableOpacity onPress = {()=>{
+                                     Navigation.showModal({
+                                        component: {
+                                            id: 'ItemDetailsId',
+                                            name: 'ItemDetails',
+                                            passProps: {
+                                                photo: item.item_Image,
+                                                item_name: item.item_Name,
+                                                item_price: item.item_Price,
+                                                item_id: item.item_id
+                                            }
+                                        }
+                            
+                                    })
+                                }} >
                                     <View style={{ backgroundColor: '#ebf7df', }}>
-                                        <Image source={{ uri: item.item_Image }} style={{ width: 300, height: 300, alignSelf: 'center', marginTop: 5 }} />
+                                        <Image source={{ uri: item.item_Image }} style={{ width: 300, height: 300, alignSelf: 'center', marginTop: 5,resizeMode:'stretch' }} />
 
                                         <Text style={{ fontWeight: 'bold', fontSize: 18, margin: 10 }}>Name: {item.item_Name}</Text>
                                         <Text style={{ fontSize: 18, margin: 10 }} numberOfLines={2}>Price: {item.item_Price}</Text>
@@ -153,6 +221,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
+        backgroundColor :'white'
 
 
 

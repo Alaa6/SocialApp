@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import Icon3 from 'react-native-vector-icons/Feather';
-import Icon2 from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -14,7 +14,7 @@ import {
     Button,
     Image,
     Alert,
-    ScrollView ,
+    ScrollView,
     Dimensions
 } from 'react-native';
 
@@ -44,7 +44,7 @@ Navigation.registerComponent('Home', () => (props) => (
 ), () => Home);
 
 let realm;
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 
 class AddItem extends Component {
@@ -173,19 +173,28 @@ class AddItem extends Component {
             <View style={styles.container}>
                 <Header title='Add Item' />
 
-                <ScrollView style={{flex :1  }}  contentContainerStyle ={{ justifyContent: 'center'}}>
-                    {photo && <Image source={{ uri: photo.uri }} style={{ width: 300, height: 300, alignSelf: 'center' }} />}
+                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ justifyContent: 'center' }}>
+                    {photo ? <Image source={{ uri: photo.uri }} style={{ width: 300, height: 300, alignSelf: 'center' ,resizeMode:'stretch' }} />
+                        : <Image source={require('../../assets/images/noImage.png')} style={{ width: 300, height: 300, alignSelf: 'center',resizeMode:'stretch' }} />
+                    }
 
                     <View style={{
-                        flexDirection: 'row',
+                        flexDirection: 'row', justifyContent: 'space-around'
                     }}>
 
                         <TouchableOpacity style={styles.ubloadPhoto} onPress={this.handleImagePicker} >
-                            <Icon1
+                          
+                            <FontAwesome
                                 style={styles.menuIconStyle}
-                                name='addfile'
-                                size={100} />
+                                name='photo'
+                                color='primaryLight'
+                                size={90} />
+
                         </TouchableOpacity>
+
+                        <Text style={styles.text}>{'- OR - '}</Text>
+
+
 
 
                         <TouchableOpacity style={styles.ubloadPhoto} onPress={this.handleCameraPicker}  >
@@ -217,6 +226,7 @@ class AddItem extends Component {
                         //    />
                         //  }
                         name='userName' />
+
                     <Input
                         containerStyle={styles.textInputStyle}
                         placeholder='Please enter item price'
@@ -264,6 +274,12 @@ const styles = StyleSheet.create({
 
     },
 
+    text: {
+        fontSize: 25,
+        color: 'rgba(0,128,0 ,0.7)',
+        marginTop: width / 5
+
+    },
     titlePageStyle: {
         paddingLeft: 40,
         paddingRight: 40,
@@ -288,8 +304,8 @@ const styles = StyleSheet.create({
     },
     textInputStyle: {
 
-        width: width/1.1,
-        height: width/8,
+        width: width / 1.1,
+        height: width / 8,
         borderWidth: 1.5,
         marginHorizontal: 20,
         marginVertical: 7,
